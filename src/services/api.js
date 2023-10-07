@@ -15,3 +15,10 @@ export const callFetchAccount = () => {
 export const callLogout = () => {
     return axios.post('/api/v1/auth/logout')
 }
+
+export const getUserWithPaginate = (currentPage, pageSize) => {
+    return axios.get(`/api/v1/user?current=${currentPage}&pageSize=${pageSize}`)
+}
+export const getFilterUser = (currentPage, pageSize, fullName, email, phone) => {
+    return axios.get(`/api/v1/user?current=${currentPage}&pageSize=${pageSize}&fullName=/${fullName}/i&email=/${email}/i&phone=/${phone}/i`)
+}
