@@ -5,16 +5,19 @@ import { VscSearchFuzzy } from 'react-icons/vsc';
 import { Divider, Badge, Drawer, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { DownOutlined } from '@ant-design/icons';
-import { Dropdown, Space } from 'antd';
+import { Dropdown, Space, Avatar, } from 'antd';
 import { useNavigate } from 'react-router';
 import { callLogout } from '../../services/api';
 import './header.scss';
 import { doLogoutAction } from '../../redux/account/accountSlice';
+import { Link } from 'react-router-dom';
+//http://localhost:8080/images/avatar/21232f297a57a5a743894a0e4a801fc3.png
 
 const Header = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const isAuthenticated = useSelector(state => state.account.isAuthenticated);
     const user = useSelector(state => state.account.user);
+    console.log('check user >>>', user)
     const navigate = useNavigate();
     const dispatch = useDispatch()
 
@@ -41,6 +44,15 @@ const Header = () => {
         },
 
     ];
+    
+    if(user.role === 'ADMIN'){
+        items.unshift({
+            label: <label style={{ cursor: 'pointer' }}>
+                <Link to='/admin'>Trang quản trị</Link>
+            </label>,
+            key: 'admin',
+        })
+    }
     return (
         <>
             <div className='header-container'>
@@ -79,8 +91,10 @@ const Header = () => {
                                     <Dropdown menu={{ items }} trigger={['click']}>
                                         <a onClick={(e) => e.preventDefault()}>
                                             <Space>
+                                            <Avatar src={<img src={`http://localhost:8080/images/avatar/${user.avatar}`} alt="avatar" />} />
                                                 Welcome {user?.fullName}
                                                 <DownOutlined />
+
                                             </Space>
                                         </a>
                                     </Dropdown>

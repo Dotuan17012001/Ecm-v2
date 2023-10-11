@@ -13,5 +13,19 @@
     gap: 20px;
     padding: 25px;
     height: calc(100vh - 70px);
-    overflow-y: scroll
+    overflow-y: scroll;
+
+    .header-table{
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+        margin-bottom: 15px;
+        margin-right: 25px;
+        .sync-icon{
+            padding-top: 5px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    }
+    
 }

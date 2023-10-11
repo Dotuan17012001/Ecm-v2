@@ -10,7 +10,7 @@ import {
     MenuUnfoldOutlined,
     DownOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, Dropdown, Space, message } from 'antd';
+import { Layout, Menu, Dropdown, Space, message, Avatar, } from 'antd';
 import { Outlet, useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import './layout.scss';
@@ -76,7 +76,15 @@ const LayoutAdmin = () => {
 
     const itemsDropdown = [
         {
-            label: <label style={{ cursor: 'pointer' }}>Quản lý tài khoản</label>,
+            label: <label style={{ cursor: 'pointer' }}>
+                Quản lý tài khoản
+            </label>,
+            key: 'account',
+        },
+        {
+            label: <label style={{ cursor: 'pointer' }}>
+                <Link to='/'>Trang chủ</Link>
+            </label>,
             key: 'account',
         },
         {
@@ -121,6 +129,7 @@ const LayoutAdmin = () => {
                     <Dropdown menu={{ items: itemsDropdown }} trigger={['click']}>
                         <a onClick={(e) => e.preventDefault()}>
                             <Space>
+                            <Avatar src={<img src={`${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user.avatar}`} alt="avatar" />} />
                                 Welcome {user?.fullName}
                                 <DownOutlined />
                             </Space>

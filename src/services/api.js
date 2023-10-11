@@ -16,6 +16,11 @@ export const callLogout = () => {
     return axios.post('/api/v1/auth/logout')
 }
 
+
 export const getUserWithPaginate= (query) => {
     return axios.get(`/api/v1/user?${query}`)
+}
+
+export const createNewUser= (fullName, password, email, phone) => {
+    return axios.post(`/api/v1/user`,{fullName, password, email, phone})
 }
