@@ -6,6 +6,7 @@ import { SyncOutlined, DeleteTwoTone} from '@ant-design/icons';
 import '../layout.scss'
 import ViewUser from './ViewUser';
 import CreateNewUser from './CreateNewUser';
+import ImportDataUser from './ImportDataUser';
 const UserTable = () => {
     const [currentPage, setCurrentPage]= useState(1)
     const [pageSize, setPageSize]= useState(5)
@@ -20,6 +21,9 @@ const UserTable = () => {
 
     const [openCreateModal, setOpenCreateModal] = useState(false);
 
+    const [openUploadFileModal, setOpenUploadFileModal] = useState(false);
+    
+    //const [openUploadFileModal, setOpenUploadFileModal] = useState(false);
     
     const onClose = () => {
       setOpen(false);
@@ -131,7 +135,7 @@ const UserTable = () => {
                 <Col span={24}>
                     <div className='header-table'>
                         <Button type="primary"> Export </Button>
-                        <Button type="primary"> Import </Button>
+                        <Button type="primary" onClick={()=>setOpenUploadFileModal(true)}> Import </Button>
                         <Button type="primary" onClick={()=>setOpenCreateModal(true)}
                         > 
                             Thêm mới 
@@ -171,6 +175,10 @@ const UserTable = () => {
                 fetchUserWithPaginate = {fetchUserWithPaginate}
             />
 
+            <ImportDataUser
+                open = {openUploadFileModal}
+                setOpen = {setOpenUploadFileModal}
+            />
         </>
     )
 }
