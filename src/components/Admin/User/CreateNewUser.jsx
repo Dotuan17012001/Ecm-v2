@@ -9,7 +9,6 @@ const CreateNewUser = (props) => {
   const { open, setOpen, fetchUserWithPaginate } = props;
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm()
-  const [api, contextHolder] = notification.useNotification();
 
   const onFinish = async (value) => {
     setConfirmLoading(true);
@@ -23,7 +22,7 @@ const CreateNewUser = (props) => {
       await fetchUserWithPaginate();
     }else{
       setConfirmLoading(false);
-      api['error']({
+      notification.error({
         message: 'ERROR',
         description:
          res.message,
@@ -34,7 +33,7 @@ const CreateNewUser = (props) => {
   }
   return (
     <>
-      {contextHolder}
+     
       <Modal
         title="Create New User"
         open={open}

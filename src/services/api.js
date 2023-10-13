@@ -16,11 +16,22 @@ export const callLogout = () => {
     return axios.post('/api/v1/auth/logout')
 }
 
-
 export const getUserWithPaginate= (query) => {
     return axios.get(`/api/v1/user?${query}`)
 }
 
 export const createNewUser= (fullName, password, email, phone) => {
     return axios.post(`/api/v1/user`,{fullName, password, email, phone})
+}
+
+export const createUserImportBulk= (array) => {
+    return axios.post(`/api/v1/user/bulk-create`,array)
+}
+
+export const callUpdateUser= (_id, fullName, phone) => {
+    return axios.put(`/api/v1/user`,{_id, fullName, phone})
+}
+
+export const callDeleteUser= (_id) => {
+    return axios.delete(`/api/v1/user/${_id}`)
 }

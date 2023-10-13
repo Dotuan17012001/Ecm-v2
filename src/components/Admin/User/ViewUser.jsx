@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import moment from 'moment'
 
 const ViewUser = (props) => {
-  const {open, dataViewUser, onClose} = props
+  const {open, dataViewUser, setOpen} = props
   
  // console.log(dataViewUser)
   return (
@@ -11,7 +11,7 @@ const ViewUser = (props) => {
         <Drawer
         title="View detail user"
         width={'100vh'}
-        onClose={onClose}
+        onClose={()=>setOpen(false)}
         open={open}
         bodyStyle={{ paddingBottom: 80 }}
       >
