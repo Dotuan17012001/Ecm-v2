@@ -30,7 +30,8 @@ const ViewUser = (props) => {
                   {dataViewUser?.phone}
             </Descriptions.Item>
             <Descriptions.Item label='Role' span={12}>
-                 <Badge status="processing" />  {dataViewUser?.role}
+                 <Badge status="processing" />  
+                 {dataViewUser?.role}
             </Descriptions.Item>
             <Descriptions.Item label='Create at' >
                         {moment(dataViewUser?.createdAt).format("DD-MMM-YYYY HH:mm:ss")}

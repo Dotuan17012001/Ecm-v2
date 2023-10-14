@@ -73,7 +73,6 @@ const LayoutAdmin = () => {
         }
     }
 
-
     const itemsDropdown = [
         {
             label: <label style={{ cursor: 'pointer' }}>
@@ -140,7 +139,7 @@ const LayoutAdmin = () => {
                     <Outlet />
                 </Content>
                 <Footer style={{ padding: 0 }}>
-                The world's first electronic trading website <HeartTwoTone />
+                     The world's first electronic trading website <HeartTwoTone />
                 </Footer>
             </Layout>
         </Layout>

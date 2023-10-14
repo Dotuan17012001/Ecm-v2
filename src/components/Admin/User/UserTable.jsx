@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Table, Row, Col, Button, Popconfirm, message, notification } from "antd";
+import {
+  Table,
+  Row,
+  Col,
+  Button,
+  Popconfirm,
+  message,
+  notification,
+} from "antd";
 import InputSearch from "./InputSearch";
 import { callDeleteUser, getUserWithPaginate } from "../../../services/api";
-import {
-  SyncOutlined,
-  DeleteTwoTone,
-  EditTwoTone,
-} from "@ant-design/icons";
-import "../layout.scss";
+import { SyncOutlined, DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
 import ViewUser from "./ViewUser";
 import CreateNewUser from "./CreateNewUser";
 import ImportDataUser from "./ImportDataUser";
 import * as XLSX from "xlsx";
 import UpdateUser from "./UpdateUser";
+import "../layout.scss";
 
 const UserTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,34 +28,26 @@ const UserTable = () => {
   const [sortQuery, setSortQuery] = useState("");
   const [dataViewUser, setDataViewUser] = useState();
   const [dataUpdateUser, setDataUpdateUser] = useState();
-
   const [openViewModal, setOpenViewModal] = useState(false);
-
   const [openCreateModal, setOpenCreateModal] = useState(false);
-
   const [openUploadFileModal, setOpenUploadFileModal] = useState(false);
-
   const [openUpdateModal, setOpenUpdateModal] = useState(false);
 
   //Delete
 
-  const handleDeleteUser = async(id) => {
-      
-      const res = await callDeleteUser(id)
- 
-      if(res && res.data){
-        
-        message.success('Đã xóa thành công !')
-        await fetchUserWithPaginate()
-      }else{
-        notification.error({
-          message:'Có lỗi xảy ra',
-          description:res.message,
-          duration: 3
-        })
-      }
+  const handleDeleteUser = async (id) => {
+    const res = await callDeleteUser(id);
+    if (res && res.data) {
+      message.success("Đã xóa thành công!");
+      await fetchUserWithPaginate();
+    } else {
+      notification.error({
+        message: "Có lỗi xảy ra",
+        description: res.message,
+        duration: 3,
+      });
+    }
   };
-  //
 
   const columns = [
     {
@@ -103,8 +99,8 @@ const UserTable = () => {
               placement="leftTop"
               description="Bạn có chắc chắn muốn xóa user này ?"
               onConfirm={() => handleDeleteUser(record._id)}
-              okText ={'Xác nhận'}
-              cancelText = {'Hủy'}
+              okText={"Xác nhận"}
+              cancelText={"Hủy"}
             >
               <DeleteTwoTone
                 twoToneColor="#eb2f96"
@@ -136,7 +132,6 @@ const UserTable = () => {
     if (sortQuery) {
       query += `&${sortQuery}`;
     }
-
     const res = await getUserWithPaginate(query);
     if (res && res?.data) {
       setListUser(res.data.result);
@@ -191,28 +186,42 @@ const UserTable = () => {
           <InputSearch handleSearch={handleSearch} />
         </Col>
         <Col span={24}>
-          <div className="header-table">
-            <Button type="primary" onClick={() => handleExportData()}>
-              {" "}
-              Export{" "}
-            </Button>
-            <Button type="primary" onClick={() => setOpenUploadFileModal(true)}>
-              {" "}
-              Import{" "}
-            </Button>
-            <Button type="primary" onClick={() => setOpenCreateModal(true)}>
-              Thêm mới
-            </Button>
-            <SyncOutlined
-              className="sync-icon"
-              onClick={() => {
-                setFilter("");
-                setSortQuery("");
-              }}
-            />
-          </div>
           <Table
-            className="def"
+            title={() => {
+              return (
+                <>
+                  <div className="header-table">
+                    <div className="title-table">Quản lý người dùng</div>
+                    <div className="btn-table">
+                      <Button type="primary" onClick={() => handleExportData()}>
+                       Export
+                      </Button>
+                      <Button
+                        type="primary"
+                        onClick={() => setOpenUploadFileModal(true)}
+                      >
+                       
+                        Import
+                      </Button>
+                      <Button
+                        type="primary"
+                        onClick={() => setOpenCreateModal(true)}
+                      >
+                        Thêm mới
+                      </Button>
+                      <SyncOutlined
+                        className="sync-icon"
+                        onClick={() => {
+                          setFilter("");
+                          setSortQuery("");
+                        }}
+                      />
+                    </div>
+                  </div>
+                </>
+              );
+            }}
+           
             columns={columns}
             dataSource={listUser}
             onChange={onChange}
@@ -236,7 +245,7 @@ const UserTable = () => {
       </Row>
       <ViewUser
         open={openViewModal}
-        setOpen = {setOpenViewModal}
+        setOpen={setOpenViewModal}
         dataViewUser={dataViewUser}
         setDataViewUser={setDataViewUser}
       />

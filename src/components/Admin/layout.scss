@@ -17,10 +17,13 @@
 
     .header-table{
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
         gap: 15px;
-        margin-bottom: 15px;
         margin-right: 25px;
+        .btn-table{
+            display: flex;
+            gap: 15px;
+        }
         .sync-icon{
             padding-top: 5px;
             font-size: 18px;
