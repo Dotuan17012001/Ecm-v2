@@ -183,6 +183,7 @@ const BookTable = () => {
         open = {openViewDetail}
         setOpen = {setOpenViewDetail}
         dataViewDetail = {dataViewDetail}
+        setDataViewDetail = {setDataViewDetail}
       />
     </>
   );

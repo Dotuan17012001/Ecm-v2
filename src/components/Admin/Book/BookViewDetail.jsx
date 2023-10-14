@@ -1,40 +1,17 @@
 import { Button, Drawer, Descriptions, Badge, Divider, Modal, Upload} from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
-
+import { v4 as uuidv4 } from "uuid";
 
 const BookViewDetail = (props) => {
-  const {open, setOpen, dataViewDetail} = props;
+
+  const {open, setOpen, dataViewDetail, setDataViewDetail} = props;
+
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState([
-    {
-      uid: '-1',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-2',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-3',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    {
-      uid: '-4',
-      name: 'image.png',
-      status: 'done',
-      url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-    },
-    
-  ]);
+
+  const [fileList, setFileList] = useState([]);
   
   const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -60,7 +37,30 @@ const BookViewDetail = (props) => {
 
   const handleChange = ({ fileList: newFileList }) =>
     setFileList(newFileList);
-  
+  useEffect(()=>{
+    let imgThumbnail = {}, imgSlider = []
+    if(dataViewDetail){
+        if(dataViewDetail.thumbnail){
+            imgThumbnail = {
+                uid: uuidv4(),
+                name: dataViewDetail.thumbnail,
+                status: 'done',
+                url: `${import.meta.env.VITE_BACKEND_URL}/images/book/${dataViewDetail.thumbnail}`
+            }
+        }
+    }
+    if(dataViewDetail.slider && dataViewDetail.slider.length > 0){
+        dataViewDetail.slider.map((item)=>{
+            imgSlider.push({
+                uid: uuidv4(),
+                name: item,
+                status: 'done',
+                url: `${import.meta.env.VITE_BACKEND_URL}/images/book/${item}`
+            })
+        })
+    }
+    setFileList([imgThumbnail, ...imgSlider])
+  },[dataViewDetail])
   return (
     <>
       <Drawer
