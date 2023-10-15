@@ -4,6 +4,7 @@ const BookInputSearch = (props) => {
   const { token } = theme.useToken();
   const [form] = Form.useForm();
   const {handleQuerySearch} = props
+  
   const formStyle = {
     maxWidth: "none",
     background: token.colorFillAlter,

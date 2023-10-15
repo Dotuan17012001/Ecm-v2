@@ -10,6 +10,7 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import { callGetBookWithPaginate } from "../../../services/api";
 import BookViewDetail from "./BookViewDetail";
+import BookCreateNew from "./BookCreateNew";
 
 const BookTable = () => {
   const [loading, setLoading] = useState(false)
@@ -20,6 +21,7 @@ const BookTable = () => {
   const [searchQuey, setSearchQuey] = useState('')
   const [sortQuey, setSortQuey] = useState("sort=-updatedAt")
   const [openViewDetail, setOpenViewDetail] = useState(false);
+  const [openCreateModal, setOpenCreateModal] = useState(false);
   const [dataViewDetail, setDataViewDetail] = useState({});
   
   const columns = [
@@ -151,7 +153,11 @@ const BookTable = () => {
                     <div className="title-table">Quản lý người dùng</div>
                     <div className="btn-table">
                     <Button type="primary">Export</Button>
-                    <Button type="primary">Thêm mới</Button>
+                    <Button type="primary"
+                      onClick={()=>setOpenCreateModal(true)}
+                    >
+                      Thêm mới
+                    </Button>
                     <RedoOutlined className="sync-icon"
                         onClick={()=>{
                           setSearchQuey('');
@@ -184,6 +190,10 @@ const BookTable = () => {
         setOpen = {setOpenViewDetail}
         dataViewDetail = {dataViewDetail}
         setDataViewDetail = {setDataViewDetail}
+      />
+      <BookCreateNew
+        open = {openCreateModal}
+        setOpen = {setOpenCreateModal}
       />
     </>
   );

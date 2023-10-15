@@ -24,7 +24,7 @@ const BookViewDetail = (props) => {
   const handleCancel = () => setPreviewOpen(false);
 
   const handlePreview = async (file) => {
-    console.log('file --->', file)
+   // console.log('file --->', file)
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
     }
@@ -67,7 +67,9 @@ const BookViewDetail = (props) => {
         title="Xem thông tin chi tiết"
         placement="right"
         size={'large'}
-        onClose={()=>setOpen(false)}
+        onClose={()=>{
+            setOpen(false);
+        }}
         open={open}
       >
         <>

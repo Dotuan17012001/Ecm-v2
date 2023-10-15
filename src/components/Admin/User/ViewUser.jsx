@@ -1,5 +1,4 @@
 import { Drawer, Descriptions, Badge } from 'antd';
-import { useEffect, useState } from 'react';
 import moment from 'moment'
 
 const ViewUser = (props) => {

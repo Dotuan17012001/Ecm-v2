@@ -10,6 +10,7 @@ const UpdateUser = (props) => {
   useEffect(() => {
        form.setFieldsValue(dataUpdate)
   }, [dataUpdate]);
+
   const onFinish = async (value) => {
     const {_id, fullName, phone} = value
     setConfirmLoading(true);
@@ -34,7 +35,6 @@ const UpdateUser = (props) => {
     <>
       <Modal
         title="Update User"
-        forceRender
         open={open}
         onOk={() => form.submit()}
         onCancel={() => {

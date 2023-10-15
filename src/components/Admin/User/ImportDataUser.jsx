@@ -43,11 +43,14 @@ const ImportDataUser = (props) => {
 
   //Upload file
   const { Dragger } = Upload;
+
+  //request
   const dummyRequest = ({ file, onSuccess }) => {
     setTimeout(() => {
       onSuccess("ok");
     }, 1000);
   };
+
   const propsDragger = {
     name: "file",
     multiple: false,
