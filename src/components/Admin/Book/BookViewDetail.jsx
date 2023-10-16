@@ -1,11 +1,11 @@
-import { Button, Drawer, Descriptions, Badge, Divider, Modal, Upload} from "antd";
+import { Button, Drawer, Descriptions, Badge, Divider, Modal, Upload, } from "antd";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const BookViewDetail = (props) => {
 
-  const {open, setOpen, dataViewDetail, setDataViewDetail} = props;
+  const {open, setOpen, dataViewDetail} = props;
 
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
@@ -35,8 +35,10 @@ const BookViewDetail = (props) => {
     
   };
 
-  const handleChange = ({ fileList: newFileList }) =>
+  const handleChange = ({ fileList: newFileList }) =>{
     setFileList(newFileList);
+  }
+    
   useEffect(()=>{
     let imgThumbnail = {}, imgSlider = []
     if(dataViewDetail){
@@ -87,6 +89,12 @@ const BookViewDetail = (props) => {
                 </Descriptions.Item>
                 <Descriptions.Item label = {'Giá tiền'}>
                     {dataViewDetail?.price} đ
+                </Descriptions.Item>
+                <Descriptions.Item label = {'Đã bán'}>
+                    {dataViewDetail?.sold} 
+                </Descriptions.Item>
+                <Descriptions.Item label = {'Số lượng'}>
+                    {dataViewDetail?.quantity} 
                 </Descriptions.Item>
                 <Descriptions.Item label = {'Thể loại'} span={12}> 
                    <Badge status="processing" /> {' '}

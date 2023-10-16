@@ -8,20 +8,28 @@ import {
   Divider,
   Select,
   Upload,
-  message
+  message,
+  notification
 } from "antd";
 import { PlusOutlined, LoadingOutlined } from "@ant-design/icons";
 import { useForm } from "antd/es/form/Form";
 import { useEffect, useState } from "react";
-import { callFetchCategory } from "../../../services/api";
+import { callFetchCategory, callUploadImageBook, createNewBook } from "../../../services/api";
 
 const BookCreateNew = (props) => {
-  const { open, setOpen } = props;
+  const { open, setOpen, fetchListBook } = props;
   const [isSubmit, setIsSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingSlider, setLoadingSlider] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [dataCategory, setDataCategory] = useState([]);
+  const [dataSlider, setDataSlider] = useState([]);
+  const [dataThumbnail, setDataThumbnail] = useState([]);
+
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
+
   const [form] = useForm();
 
   const getBase64 = (img, callback) => {
@@ -29,6 +37,7 @@ const BookCreateNew = (props) => {
     reader.addEventListener("load", () => callback(reader.result));
     reader.readAsDataURL(img);
   };
+
   
   const fetchCategory = async () => {
     const res = await callFetchCategory();
@@ -59,7 +68,6 @@ const BookCreateNew = (props) => {
     }
   };
 
-  const onFinish = () => {};
 
   const beforeUpload = (file) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -73,10 +81,99 @@ const BookCreateNew = (props) => {
     return isJpgOrPng && isLt2M;
   };
 
-  const handleUploadFile = ({ file, onSuccess, onError }) => {
-    setTimeout(() => {
-        onSuccess("ok");
-    }, 1000);
+  const handleUploadFileThumbnail = async({ file, onSuccess, onError }) => {
+   // console.log('file check =>', file)
+      const res = await callUploadImageBook(file)
+      if(res && res.data){
+        //console.log('file res =>', res)
+       setDataThumbnail([
+        {
+          name: res.data.fileUploaded,
+          uid : file.uid 
+        }
+       ])
+       onSuccess("ok");
+      }else{
+        onError('Có lỗi xảy ra khi upload file')
+      }
+    
+  };
+
+  const handleUploadFileSlider = async({ file, onSuccess, onError }) => {
+        const res = await callUploadImageBook(file)
+        if(res && res.data){
+          console.log('file res =>', res)
+          setDataSlider((dataSlider)=>[...dataSlider,{
+            name: res.data.fileUploaded,
+            uid : file.uid 
+          }])
+          onSuccess("ok");
+        }else{
+          onError('Có lỗi xảy ra khi upload file')
+        }
+  };
+
+  const handlePreview = async (file) => {
+      await getBase64(file.originFileObj, (url) => {
+        setPreviewImage(url);
+        setPreviewOpen(true);
+        setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1 ));
+      })
+  }
+
+  const handleCancel = () => {
+      setPreviewImage('');
+      setPreviewOpen(false);
+      setPreviewTitle('');
+  }
+
+  const handleRemove = (file, type) => {
+      if(type === 'thumbnail'){
+        setDataThumbnail([])
+      }
+      if(type === 'slider'){
+        const newSlider = dataSlider.filter(item => item.uid !== file.uid)
+        setDataSlider(newSlider);
+      }
+  }
+
+  const onFinish = async (value) => {
+    if(dataThumbnail.length === 0){
+      notification.error({
+        message: 'Có lỗi validate',
+        description:'Vui lòng nhập ảnh Thumbnail',
+        duration: 3
+      })
+    }
+
+    if(dataSlider.length === 0){
+      notification.error({
+        message: 'Có lỗi validate',
+        description:'Vui lòng nhập ảnh Slider',
+        duration: 3
+      })
+    }
+    const {mainText, author, price, sold, quantity, category} = value
+    const thumbnail = dataThumbnail[0].name
+    const slider = dataSlider.map(item => item.name)
+    setIsSubmit(true)
+    const res = await createNewBook(thumbnail, slider, mainText, author, price, sold, quantity, category)
+    setIsSubmit(false)
+    if(res){
+      message.success('Thêm mới sách thành công')
+      form.resetFields();
+      setDataSlider([]);
+      setDataThumbnail([]);
+      setOpen(false)
+      await fetchListBook()
+    }else{
+      notification.error({
+        message: 'Có lỗi xảy ra!!!',
+        description:'Không thê thêm mới sách',
+        duration: 3
+      })
+    }
+
   };
 
   return (
@@ -84,8 +181,11 @@ const BookCreateNew = (props) => {
       <Modal
         title="Thêm mới sách"
         open={open}
-        onOk={() => form.submit}
-        onCancel={() => setOpen(false)}
+        onOk={() => form.submit()}
+        onCancel={() => {
+          setOpen(false);
+          form.resetFields()
+        }}
         okText="Thêm mới"
         cancelText="Hủy"
         confirmLoading={isSubmit}
@@ -125,7 +225,7 @@ const BookCreateNew = (props) => {
               >
                 <InputNumber
                   addonAfter={"VND"}
-                  defaultValue={100}
+                  min={0}
                   formatter={(value) =>
                     `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                   }
@@ -184,8 +284,10 @@ const BookCreateNew = (props) => {
                   maxCount={1}
                   multiple={false}
                   onChange={handleChange}
-                  customRequest={handleUploadFile}
+                  customRequest={handleUploadFileThumbnail}
                   beforeUpload={beforeUpload}
+                  onPreview={handlePreview}
+                  onRemove={(file) => handleRemove(file,"thumbnail")}
                 >
                   <div>
                     {loading ? <LoadingOutlined /> : <PlusOutlined />}
@@ -204,9 +306,11 @@ const BookCreateNew = (props) => {
                   name="sliser"
                   listType="picture-card"
                   multiple
-                  customRequest={handleUploadFile}
+                  customRequest={handleUploadFileSlider}
                   beforeUpload={beforeUpload}
                   onChange={(info) => handleChange(info, "slider")}
+                  onPreview={handlePreview}
+                  onRemove={(file) => handleRemove(file,"slider")}
                 >
                   <div>
                     {loadingSlider ? <LoadingOutlined /> : <PlusOutlined />}
@@ -217,6 +321,9 @@ const BookCreateNew = (props) => {
             </Col>
           </Row>
         </Form>
+      </Modal>
+      <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+        <img alt="example" style={{ width: '100%' }} src={previewImage} />
       </Modal>
     </>
   );

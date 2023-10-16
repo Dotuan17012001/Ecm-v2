@@ -19,7 +19,7 @@ const BookTable = () => {
   const [listBook, setListBook] = useState([])
   const [total, setTotal] = useState(5)
   const [searchQuey, setSearchQuey] = useState('')
-  const [sortQuey, setSortQuey] = useState("sort=-updatedAt")
+  const [sortQuey, setSortQuey] = useState("&sort=-updatedAt")
   const [openViewDetail, setOpenViewDetail] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [dataViewDetail, setDataViewDetail] = useState({});
@@ -189,11 +189,11 @@ const BookTable = () => {
         open = {openViewDetail}
         setOpen = {setOpenViewDetail}
         dataViewDetail = {dataViewDetail}
-        setDataViewDetail = {setDataViewDetail}
       />
       <BookCreateNew
         open = {openCreateModal}
         setOpen = {setOpenCreateModal}
+        fetchListBook = {fetchListBookWithPaginate}
       />
     </>
   );
