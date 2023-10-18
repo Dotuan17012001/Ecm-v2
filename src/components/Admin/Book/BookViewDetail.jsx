@@ -21,7 +21,6 @@ const BookViewDetail = (props) => {
     reader.onerror = (error) => reject(error);
   })
 
-  const handleCancel = () => setPreviewOpen(false);
 
   const handlePreview = async (file) => {
    // console.log('file --->', file)
@@ -36,6 +35,7 @@ const BookViewDetail = (props) => {
   };
 
   const handleChange = ({ fileList: newFileList }) =>{
+    console.log('check=>',newFileList)
     setFileList(newFileList);
   }
     
@@ -63,6 +63,7 @@ const BookViewDetail = (props) => {
     }
     setFileList([imgThumbnail, ...imgSlider])
   },[dataViewDetail])
+
   return (
     <>
       <Drawer
@@ -120,7 +121,7 @@ const BookViewDetail = (props) => {
                 >
         
                 </Upload>
-                <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
+                <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={() => setPreviewOpen(false)}>
                    <img alt="example" style={{ width: '100%' }} src={previewImage} />
                 </Modal>
                 

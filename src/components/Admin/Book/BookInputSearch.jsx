@@ -31,15 +31,16 @@ const BookInputSearch = (props) => {
 
   return (
     <>
-      <Form name="advanced_search" style={formStyle} form={form} onFinish={onFinish}>
+      <Form name="advanced_search" style={formStyle} form={form} onFinish={onFinish} >
         <Row gutter={24}>
           <Col span={8}>
             <Form.Item
               labelCol={{ span: 24 }}
               name={`mainText`}
               label={"Tên sách"}
+              autocomplete="off"
             >
-              <Input />
+              <Input/>
             </Form.Item>
           </Col>
           <Col span={8}>

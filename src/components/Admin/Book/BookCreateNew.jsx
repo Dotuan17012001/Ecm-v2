@@ -21,7 +21,6 @@ const BookCreateNew = (props) => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingSlider, setLoadingSlider] = useState(false);
-  const [imageUrl, setImageUrl] = useState(null);
   const [dataCategory, setDataCategory] = useState([]);
   const [dataSlider, setDataSlider] = useState([]);
   const [dataThumbnail, setDataThumbnail] = useState([]);
@@ -29,9 +28,9 @@ const BookCreateNew = (props) => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
-
+  
   const [form] = useForm();
-
+  
   const getBase64 = (img, callback) => {
     const reader = new FileReader();
     reader.addEventListener("load", () => callback(reader.result));
@@ -54,7 +53,6 @@ const BookCreateNew = (props) => {
     fetchCategory();
   }, []);
 
-
   const handleChange = (info, type) => {
     if (info.file.status === "uploading") {
       type ? setLoadingSlider(true) : setLoading(true);
@@ -63,7 +61,6 @@ const BookCreateNew = (props) => {
     if (info.file.status === "done") {
       getBase64(info.file.originFileObj, (url) => {
         type ? setLoadingSlider(false) : setLoading(false);
-        setImageUrl(url);
       });
     }
   };
@@ -85,7 +82,7 @@ const BookCreateNew = (props) => {
    // console.log('file check =>', file)
       const res = await callUploadImageBook(file)
       if(res && res.data){
-        //console.log('file res =>', res)
+       // console.log('res thumb =>', res)
        setDataThumbnail([
         {
           name: res.data.fileUploaded,
@@ -102,7 +99,7 @@ const BookCreateNew = (props) => {
   const handleUploadFileSlider = async({ file, onSuccess, onError }) => {
         const res = await callUploadImageBook(file)
         if(res && res.data){
-          console.log('file res =>', res)
+         // console.log('file res =>', res)
           setDataSlider((dataSlider)=>[...dataSlider,{
             name: res.data.fileUploaded,
             uid : file.uid 
@@ -114,7 +111,8 @@ const BookCreateNew = (props) => {
   };
 
   const handlePreview = async (file) => {
-      await getBase64(file.originFileObj, (url) => {
+    //console.log('file =>',file.originFileObj)
+    file.preview=  await getBase64(file.originFileObj, (url) => {
         setPreviewImage(url);
         setPreviewOpen(true);
         setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1 ));
@@ -283,11 +281,12 @@ const BookCreateNew = (props) => {
                   listType="picture-card"
                   maxCount={1}
                   multiple={false}
-                  onChange={handleChange}
-                  customRequest={handleUploadFileThumbnail}
-                  beforeUpload={beforeUpload}
-                  onPreview={handlePreview}
-                  onRemove={(file) => handleRemove(file,"thumbnail")}
+                  onChange={handleChange}                     //  hien thi Trang thai loading hay khong
+                  customRequest={handleUploadFileThumbnail}   // Goi api uploadFile lay ten file moi va setState de truyen vao api tao moi
+                  beforeUpload={beforeUpload}                 // Validate định dạng file, kích thước file image
+                  onPreview={handlePreview}                   // convert file sang base64 va setPreview
+                  onRemove={(file) => handleRemove(file,"thumbnail")}    //remove img = cách set State lai data thumb va filter slider
+                  
                 >
                   <div>
                     {loading ? <LoadingOutlined /> : <PlusOutlined />}

@@ -8,9 +8,10 @@ import {
 import "../layout.scss";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { callGetBookWithPaginate } from "../../../services/api";
+import { callGetBookWithPaginate, callDeleteBook } from "../../../services/api";
 import BookViewDetail from "./BookViewDetail";
 import BookCreateNew from "./BookCreateNew";
+import BookUpdateModal from "./BookUpdateModal";
 
 const BookTable = () => {
   const [loading, setLoading] = useState(false)
@@ -22,8 +23,31 @@ const BookTable = () => {
   const [sortQuey, setSortQuey] = useState("&sort=-updatedAt")
   const [openViewDetail, setOpenViewDetail] = useState(false);
   const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [openUpdateModal, setOpenUpdateModal] = useState(false);
   const [dataViewDetail, setDataViewDetail] = useState({});
+  const [dataUpdate, setDataUpdate] = useState({});
   
+
+
+  const handleDeleteBook = async(id) => {
+    
+      const res = await callDeleteBook(id)
+      console.log('res=>>',res)
+      if(res){
+          message.success("Xóa thành công")
+          await fetchListBookWithPaginate()
+      }else{
+        notification.error({
+          message: "Có lỗi xảy ra",
+          description: res.message,
+          duration: 3,
+        });
+      }
+    
+  
+  };
+
+
   const columns = [
     {
       title: "ID",
@@ -89,13 +113,26 @@ const BookTable = () => {
       render: (text, record, index) => {
         return (
         <>
+        <Popconfirm
+        placement="rightBottom"
+        title="Xác nhận xóa sách"
+        description="Bạn có chắc chắn muốn xóa?"
+        onConfirm={() => handleDeleteBook(record._id)}
+        
+      >
           <DeleteTwoTone
                 twoToneColor="#eb2f96"
                 style={{ cursor: "pointer" }}
           />
+      </Popconfirm>
+          
           <EditTwoTone
               twoToneColor="#3cc41a"
               style={{ cursor: "pointer", marginLeft: "20px" }}
+              onClick={()=>{
+                setOpenUpdateModal(true)
+                setDataUpdate(record)
+              }}
             />
         </>)
       },
@@ -126,17 +163,27 @@ const BookTable = () => {
   }
 
   const onChange = (pagination, filters, sorter, extra) => {
-   //console.log("params", pagination, filters, sorter, extra);
-    console.log("params",sorter);
-    setCurrentPage(pagination.current);
-    setPageSize(pagination.pageSize);
-    let sortQ = (sorter.order === 'ascend' ? `&sort=${sorter.field}`:`&sort=-${sorter.field}`)
-    setSortQuey(sortQ)
+    console.log("params", pagination, sorter);
+    if (pagination && pagination.current !== currentPage) {
+      setCurrentPage(pagination.current);
+   
+    }
+    if (pagination && pagination.pageSize !== pageSize) {
+      setPageSize(pagination.pageSize);
+      
+      setCurrentPage(1);
+    }
+    if (sorter && sorter.field){
+      let sortQ = (sorter?.order === 'ascend' ? `&sort=${sorter?.field}`:`&sort=-${sorter.field}`)
+      setSortQuey(sortQ)
+    }
   };
 
   const handleQuerySearch = (searchQuery) => {
     setSearchQuey(searchQuery)
   }
+
+  //console.log('dataUpdate=>',dataUpdate)
  
   return (
     <>
@@ -150,7 +197,7 @@ const BookTable = () => {
               return (
                 <>
                 <div className="header-table">
-                    <div className="title-table">Quản lý người dùng</div>
+                    <div className="title-table">Quản lý sách</div>
                     <div className="btn-table">
                     <Button type="primary">Export</Button>
                     <Button type="primary"
@@ -194,6 +241,13 @@ const BookTable = () => {
         open = {openCreateModal}
         setOpen = {setOpenCreateModal}
         fetchListBook = {fetchListBookWithPaginate}
+      />
+      <BookUpdateModal
+        open = {openUpdateModal}
+        setOpen = {setOpenUpdateModal}
+        fetchListBook = {fetchListBookWithPaginate}
+        dataUpdate = {dataUpdate}
+        setDataUpdate = {setDataUpdate}
       />
     </>
   );
