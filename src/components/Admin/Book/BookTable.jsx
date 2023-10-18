@@ -12,6 +12,7 @@ import { callGetBookWithPaginate, callDeleteBook } from "../../../services/api";
 import BookViewDetail from "./BookViewDetail";
 import BookCreateNew from "./BookCreateNew";
 import BookUpdateModal from "./BookUpdateModal";
+import * as XLSX from "xlsx";
 
 const BookTable = () => {
   const [loading, setLoading] = useState(false)
@@ -182,9 +183,16 @@ const BookTable = () => {
   const handleQuerySearch = (searchQuery) => {
     setSearchQuey(searchQuery)
   }
-
   //console.log('dataUpdate=>',dataUpdate)
- 
+
+  const handleExportData = () => {
+    if (listBook.length > 0) {
+      const worksheet = XLSX.utils.json_to_sheet(listBook);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      XLSX.writeFile(workbook, "ExportDataBook.csv");
+    }
+  };
   return (
     <>
       <Row className="table-user" >
@@ -199,7 +207,9 @@ const BookTable = () => {
                 <div className="header-table">
                     <div className="title-table">Quản lý sách</div>
                     <div className="btn-table">
-                    <Button type="primary">Export</Button>
+                    <Button type="primary"
+                        onClick={()=>handleExportData()}
+                    >Export</Button>
                     <Button type="primary"
                       onClick={()=>setOpenCreateModal(true)}
                     >
