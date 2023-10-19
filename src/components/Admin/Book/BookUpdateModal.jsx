@@ -325,7 +325,9 @@ import {
                                 name="sold"
                                 rules={[{ required: true, message: 'Vui lòng nhập số lượng đã bán!' }]}
                             >
-                                <InputNumber min={0} defaultValue={0} style={{ width: '100%' }} />
+                                <InputNumber min={0} 
+                                //defaultValue={0} 
+                                style={{ width: '100%' }} />
                             </Form.Item>
                         </Col>
                         <Col span={12}>

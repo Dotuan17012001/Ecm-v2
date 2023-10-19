@@ -17,7 +17,7 @@ const Header = () => {
     const [openDrawer, setOpenDrawer] = useState(false);
     const isAuthenticated = useSelector(state => state.account.isAuthenticated);
     const user = useSelector(state => state.account.user);
-    console.log('check user >>>', user)
+    //console.log('check user >>>', user)
     const navigate = useNavigate();
     const dispatch = useDispatch()
 

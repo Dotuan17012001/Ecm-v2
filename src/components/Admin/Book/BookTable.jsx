@@ -15,6 +15,7 @@ import BookUpdateModal from "./BookUpdateModal";
 import * as XLSX from "xlsx";
 
 const BookTable = () => {
+
   const [loading, setLoading] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(5)
@@ -33,8 +34,7 @@ const BookTable = () => {
   const handleDeleteBook = async(id) => {
     
       const res = await callDeleteBook(id)
-      console.log('res=>>',res)
-      if(res){
+      if(res && res.data){
           message.success("Xóa thành công")
           await fetchListBookWithPaginate()
       }else{

@@ -265,7 +265,7 @@ const BookCreateNew = (props) => {
                 <InputNumber
                   min={0}
                   style={{ width: "100%" }}
-                  defaultValue={0}
+                 // defaultValue={0}
                 />
               </Form.Item>
             </Col>
