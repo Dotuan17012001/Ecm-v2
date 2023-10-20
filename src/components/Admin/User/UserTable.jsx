@@ -59,6 +59,7 @@ const UserTable = () => {
         return (
           <a
             href="#"
+            key={index}
             onClick={() => {
               // console.log("record", record);
               setDataViewUser(record);
@@ -101,6 +102,7 @@ const UserTable = () => {
               onConfirm={() => handleDeleteUser(record._id)}
               okText={"Xác nhận"}
               cancelText={"Hủy"}
+              key={index}
             >
               <DeleteTwoTone
                 twoToneColor="#eb2f96"
@@ -190,7 +192,7 @@ const UserTable = () => {
             title={() => {
               return (
                 <>
-                  <div className="header-table">
+                  <div className="header-table" key={`index`}>
                     <div className="title-table">Quản lý người dùng</div>
                     <div className="btn-table">
                       <Button type="primary" onClick={() => handleExportData()}>

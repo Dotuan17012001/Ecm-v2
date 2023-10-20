@@ -29,7 +29,7 @@ const BookCreateNew = (props) => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   
-  const [form] = useForm();
+  const [form] = Form.useForm();
   
   const getBase64 = (img, callback) => {
     const reader = new FileReader();

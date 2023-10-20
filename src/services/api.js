@@ -61,9 +61,20 @@ export const callUploadImageBook= (fileImg) => {
 export const createNewBook = (thumbnail, slider, mainText, author, price, sold, quantity, category) => {
     return axios.post(`/api/v1/book`,{thumbnail, slider, mainText, author, price, sold, quantity, category})
 }
+
 export const callUpdateBook = (id, thumbnail, slider, mainText, author, price, sold, quantity, category) => {
     return axios.put(`/api/v1/book/${id}`,{thumbnail, slider, mainText, author, price, sold, quantity, category})
 }
+
 export const callDeleteBook = (id) => {
     return axios.delete(`/api/v1/book/${id}`)
 }
+
+export const getBookCategory = () => {
+    return axios.get(`/api/v1/database/category`)
+}
+
+export const getListBookWithPaginate = (query) => {
+    return axios.get(`/api/v1/book?${query}`)
+}
+

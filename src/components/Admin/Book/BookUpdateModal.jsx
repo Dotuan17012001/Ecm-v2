@@ -110,8 +110,9 @@ import {
             })
             return;
         }
-       // console.log('data value=>', values)
+        //console.log('data value=>', values)
         const {_id, mainText, author, price, sold, quantity, category } = values;
+       // console.log('dataSold=>', sold)
         const thumbnail = dataThumbnail[0].name;
         const slider = dataSlider.map(item => item.name);
         setIsSubmit(true)
@@ -326,7 +327,6 @@ import {
                                 rules={[{ required: true, message: 'Vui lòng nhập số lượng đã bán!' }]}
                             >
                                 <InputNumber min={0} 
-                                //defaultValue={0} 
                                 style={{ width: '100%' }} />
                             </Form.Item>
                         </Col>

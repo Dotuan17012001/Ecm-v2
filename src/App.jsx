@@ -27,7 +27,7 @@ const Layout = () => {
   return (
     <div className='layout-app'>
       <Header />
-      <Outlet />
+        <Outlet />
       <Footer />
     </div>
   )

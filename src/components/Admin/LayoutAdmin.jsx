@@ -101,6 +101,7 @@ const LayoutAdmin = () => {
         <Layout
             style={{ minHeight: '100vh' }}
             className="layout-admin"
+            
         >
             <Sider
                 theme='light'
