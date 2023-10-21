@@ -1,37 +1,16 @@
 import { Col, Row, Form, Checkbox, Divider, InputNumber, Button, Rate, Tabs,  Spin } from 'antd';
 import { FilterTwoTone, ReloadOutlined } from '@ant-design/icons';
 import './home.scss'
-import { useForm } from 'antd/es/form/Form';
 import { useEffect, useState } from 'react';
 import { getBookCategory, getListBookWithPaginate } from '../../services/api';
 import { Pagination } from 'antd';
+import { useForm } from 'antd/es/form/Form';
 
 const Home = () => {
-    const [form] = Form.useForm()
-    const [isLoading, setIsLoading] = useState(false)
-    const items = [
-        {
-            key: '1',
-            label: 'Phổ biến',
-            children: <></>
-        },
-        {
-            key: '2',
-            label: 'Hàng mới',
-            children: <></>
-        },
-        {
-            key: '3',
-            label: 'Giá thấp đến cao',
-            children: <></>
-        },
-        {
-            key: '4',
-            label: 'Giá cao đến thấp',
-            children: <></>
-        },
-    ]
 
+    const [form] = Form.useForm()
+
+    const [isLoading, setIsLoading] = useState(false)
     const [listCategory, setListCategory] = useState([])
     const [listBook, setListBook] = useState([])
     const [currentPage, setCurrentPage] = useState(1)
@@ -40,6 +19,42 @@ const Home = () => {
     const [sortQuery, setSortQuery] = useState('&sort=-sold')
     const [filter, setFilter] = useState('')
 
+
+    const items = [
+        {
+            key: '&sort=-sold',
+            label: 'Phổ biến',
+            children: <></>
+        },
+        {
+            key: '&sort=-updatedAt',
+            label: 'Hàng mới',
+            children: <></>
+        },
+        {
+            key: '&sort=price',
+            label: 'Giá thấp đến cao',
+            children: <></>
+        },
+        {
+            key: '&sort=-price',
+            label: 'Giá cao đến thấp',
+            children: <></>
+        },
+    ]
+
+    const handleChangeFilter = (changedValues, values) => {
+        //console.log('handle changedValues, values =>', changedValues, values)
+        if(changedValues.category){
+            const listCateFilter = values.category
+            if(listCateFilter && listCateFilter.length > 0){
+                const dataFilter = listCateFilter.join(',') 
+                setFilter(`&category=${dataFilter}`)
+            }else{
+                setFilter('')
+            }
+        }
+    }
     
     useEffect(() => {
         const fetchBookCategory = async() => {
@@ -55,10 +70,13 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-
         const fetchListBook = async () => {
             setIsLoading(true)
             let query = `current=${currentPage}&pageSize=${pageSize}`
+
+            if(filter){
+                query+=filter
+            }
 
             if(sortQuery){
                 query+=sortQuery
@@ -78,17 +96,11 @@ const Home = () => {
         }
         fetchListBook()
         
-    }, [pageSize, currentPage, total, sortQuery]);
+    }, [pageSize, currentPage, sortQuery, filter]);
 
-
-    
-
-    const handleChangeFilter = (changedValues, values) => {
-        console.log('handleChangeFilter=>', changedValues, values)
-    }
 
     const handleOnChangePage = (curr, size) => {
-        console.log(curr, size);
+       //console.log(curr, size);
         if(curr!== currentPage){
             setCurrentPage(curr)
            
@@ -97,7 +109,26 @@ const Home = () => {
             setPageSize(size)
             setCurrentPage(1)
         }
-      };
+    };
+
+    const onChangeKey = (key) => {
+        if(key){
+            setSortQuery(key)
+        }
+    }
+
+    const onFinish = (values) => {
+        console.log('value', values)
+        if(values?.range?.from >= 0 && values?.range?.to >= 0){
+            let rangeFilter = `&price>=${values.range.from}&price<=${values.range.to}`
+            if(values?.category?.length){
+                const listCate = values.category.join(',');
+                rangeFilter += `&category=${listCate}`
+            }
+            setFilter(rangeFilter)
+        }
+        
+    }
     
     return (
         <>
@@ -111,12 +142,13 @@ const Home = () => {
                                     <FilterTwoTone />
                                     Bộ lọc tìm kiếm
                                 </span>
-                                <ReloadOutlined onClick={()=>form.resetFields()}/>
+                                <ReloadOutlined onClick={() => {form.resetFields(), setFilter('')}}/>
                             </div>
                             <Divider/>
                             <Form 
                                 form={form}
                                 onValuesChange={(changedValues, values)=>handleChangeFilter(changedValues, values)}
+                                onFinish={onFinish}
                             >
                                 <Form.Item
                                     name={"category"}
@@ -164,7 +196,7 @@ const Home = () => {
                                     </div>
                                     <div>
                                         <Button type='primary'
-                                            onClick={()=>form.submit()}
+                                            onClick={() => form.submit()}
                                             style={{width:'100%'}}
                                         >Áp dụng</Button>
                                     </div>
@@ -202,7 +234,7 @@ const Home = () => {
                         <Spin spinning={isLoading} tip={'Loading...'}>
                              <div className='wrapper-right'>
                                 <Row>
-                                    <Tabs defaultActiveKey='1' items={items}/>
+                                    <Tabs defaultActiveKey='1' items={items} onChange={onChangeKey}/>
                                 </Row>
                                 <Row>
                                     <div className="customize-row">
