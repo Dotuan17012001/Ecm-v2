@@ -62,7 +62,7 @@ const Header = () => {
                             setOpenDrawer(true)
                         }}>☰</div>
                         <div className='page-header__logo'>
-                            <span className='logo'>
+                            <span className='logo' onClick={()=>navigate('/')}>
                                 <FaReact className='rotate icon-react' /> TiPee Shop
                                 <VscSearchFuzzy className='icon-search' />
                             </span>

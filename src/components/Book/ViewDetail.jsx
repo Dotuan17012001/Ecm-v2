@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { BsCartPlus } from "react-icons/bs";
 import ModalGallery from "./ModalGallery";
+import BookLoader from "./BookLoader";
 
 const ViewDetail = () => {
   const refGallery = useRef(null);
@@ -92,7 +93,7 @@ const ViewDetail = () => {
           }}
         >
           <div style={{ padding: "20px", background: "#fff", borderRadius: 5 }}>
-            <Row gutter={[20, 20]}>
+            {/* <Row gutter={[20, 20]}>
               <Col md={10} sm={0} xs={0}>
                 <ImageGallery
                   ref={refGallery}
@@ -108,6 +109,7 @@ const ViewDetail = () => {
               <Col md={14} sm={24} xs={24}>
                 <Col md={0} sm={24} xs={24}>
                   <ImageGallery
+                  //just active when responsive
                     ref={refGallery}
                     items={images}
                     showPlayButton={false} //hide play button
@@ -170,7 +172,8 @@ const ViewDetail = () => {
                   </div>
                 </Col>
               </Col>
-            </Row>
+            </Row> */}
+            <BookLoader/>
           </div>
         </div>
         <ModalGallery
