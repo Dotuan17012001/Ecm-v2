@@ -5,15 +5,14 @@
          margin: 0 auto;
          max-width: 1290px;
          margin-bottom: 15px;
+         margin-top: 15px;
          display: flex;
          justify-content: space-between;
-         //background-color: #f0f0f0;
          .col-left{
              background-color: #fff;
              border-radius: 5px;
              padding: 20px;
-             margin-top: 15px;
-            // margin-right: 8px;
+            
              .wrapper-left{
                 .filter-header{
                     display: flex;
@@ -29,7 +28,7 @@
          }
          .col-right{
              background-color: #f0f0f0;
-             margin-top: 15px;
+            
              .wrapper-right{
                 border-radius: 5px;
                 background-color: #fff;
