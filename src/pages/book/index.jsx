@@ -10,7 +10,6 @@ const BookPage = () => {
   const id = param?.get("id");
 
   const [detailBook, setDetailBook] = useState({})
-
   const [images, setImages] = useState([])
 
   useEffect(() => {
@@ -21,9 +20,7 @@ const BookPage = () => {
     const res = await callGetDetailBook(id)
    // console.log('res',res);
     if(res && res?.data){
-      
        // setDetailBook(res.data)
-
         setTimeout(()=>{
           setDetailBook(res.data) //Make loading Effect
         },1000)
@@ -49,7 +46,6 @@ const BookPage = () => {
       }
       //console.log('checkIMG_RAW',imagesRaw)
       //setImages(imagesRaw)
-      
       setTimeout(()=>{
         setImages(imagesRaw)  //Make loading Effect
       },1000)
