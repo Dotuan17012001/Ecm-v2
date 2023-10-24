@@ -1,7 +1,5 @@
-import { LikeOutlined, MessageOutlined, StarOutlined } from '@ant-design/icons';
-import { Skeleton, Modal, Row, Col, Rate, Divider } from "antd";
-import { useEffect, useRef, useState } from "react";
 
+import { Skeleton, Row, Col } from "antd";
 const BookLoader = () => {
     return ( 
         <>

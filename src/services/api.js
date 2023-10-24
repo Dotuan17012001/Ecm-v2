@@ -77,4 +77,7 @@ export const getBookCategory = () => {
 export const getListBookWithPaginate = (query) => {
     return axios.get(`/api/v1/book?${query}`)
 }
+export const callGetDetailBook = (id) => {
+    return axios.get(`/api/v1/book/${id}`)
+}
 

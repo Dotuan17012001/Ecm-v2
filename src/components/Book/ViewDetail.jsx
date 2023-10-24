@@ -7,67 +7,14 @@ import { BsCartPlus } from "react-icons/bs";
 import ModalGallery from "./ModalGallery";
 import BookLoader from "./BookLoader";
 
-const ViewDetail = () => {
+
+
+const ViewDetail = (props) => {
+  const  {images, detailBook} = props
   const refGallery = useRef(null);
   const [isOpenModalGallery, setIsOpenModalGallery] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const images = [
-    {
-        original: 'https://picsum.photos/id/1018/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1018/250/150/',
-        originalClass: "original-image",
-        thumbnailClass: "thumbnail-image"
-    },
-    {
-        original: 'https://picsum.photos/id/1015/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1015/250/150/',
-        originalClass: "original-image",
-        thumbnailClass: "thumbnail-image"
-    },
-    {
-        original: 'https://picsum.photos/id/1019/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1019/250/150/',
-        originalClass: "original-image",
-        thumbnailClass: "thumbnail-image"
-    },
-    {
-        original: 'https://picsum.photos/id/1018/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1018/250/150/',
-        originalClass: "original-image",
-        thumbnailClass: "thumbnail-image"
-    },
-    {
-        original: 'https://picsum.photos/id/1015/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1015/250/150/',
-        originalClass: "original-image",
-        thumbnailClass: "thumbnail-image"
-    },
-    {
-        original: 'https://picsum.photos/id/1019/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1019/250/150/',
-        originalClass: "original-image",
-        thumbnailClass: "thumbnail-image"
-    },
-    {
-        original: 'https://picsum.photos/id/1018/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1018/250/150/',
-        originalClass: "original-image",
-        thumbnailClass: "thumbnail-image"
-    },
-    {
-        original: 'https://picsum.photos/id/1015/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1015/250/150/',
-        originalClass: "original-image",
-        thumbnailClass: "thumbnail-image"
-    },
-    {
-        original: 'https://picsum.photos/id/1019/1000/600/',
-        thumbnail: 'https://picsum.photos/id/1019/250/150/',
-        originalClass: "original-image",
-        thumbnailClass: "thumbnail-image"
-    },
-];
 
   const onChange = (value) => {
     console.log("changed", value);
@@ -93,7 +40,8 @@ const ViewDetail = () => {
           }}
         >
           <div style={{ padding: "20px", background: "#fff", borderRadius: 5 }}>
-            {/* <Row gutter={[20, 20]}>
+            {detailBook && detailBook?._id ? 
+            <Row gutter={[20, 20]}>
               <Col md={10} sm={0} xs={0}>
                 <ImageGallery
                   ref={refGallery}
@@ -121,10 +69,10 @@ const ViewDetail = () => {
                 </Col>
                 <Col span={24}>
                   <div className="author">
-                    Tác giả: <a href="#">Jo Hemmings</a>{" "}
+                    Tác giả: <a href="#">{detailBook?.author}</a>{" "}
                   </div>
                   <div className="title">
-                    How Psychology Works - Hiểu Hết Về Tâm Lý Học
+                      {detailBook?.mainText}
                   </div>
                   <div className="rating">
                     <Rate
@@ -134,7 +82,7 @@ const ViewDetail = () => {
                     />
                     <span className="sold">
                       <Divider type="vertical" />
-                      Đã bán 6969
+                      {detailBook?.sold}
                     </span>
                   </div>
                   <div className="price">
@@ -142,7 +90,7 @@ const ViewDetail = () => {
                       {new Intl.NumberFormat("vi-VN", {
                         style: "currency",
                         currency: "VND",
-                      }).format(696966666)}
+                      }).format(detailBook?.price)}
                     </span>
                   </div>
                   <div className="delivery">
@@ -172,8 +120,11 @@ const ViewDetail = () => {
                   </div>
                 </Col>
               </Col>
-            </Row> */}
+            </Row>
+            :
             <BookLoader/>
+            }
+          
           </div>
         </div>
         <ModalGallery
