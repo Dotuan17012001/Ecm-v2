@@ -4,6 +4,7 @@ import ViewDetail from "../../components/Book/ViewDetail";
 import { callGetDetailBook } from "../../services/api";
 import './bookDetail.scss'
 
+
 const BookPage = () => {
   const location = useLocation();
   let param = new URLSearchParams(location.search);
@@ -11,6 +12,7 @@ const BookPage = () => {
 
   const [detailBook, setDetailBook] = useState({})
   const [images, setImages] = useState([])
+
 
   useEffect(() => {
       fetchDetailBook()
@@ -21,6 +23,7 @@ const BookPage = () => {
    // console.log('res',res);
     if(res && res?.data){
        // setDetailBook(res.data)
+       
         setTimeout(()=>{
           setDetailBook(res.data) //Make loading Effect
         },1000)

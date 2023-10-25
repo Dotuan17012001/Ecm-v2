@@ -80,7 +80,7 @@ const Header = () => {
                                     count={5}
                                     size={"small"}
                                 >
-                                    <FiShoppingCart className='icon-cart' />
+                                    <FiShoppingCart className='icon-cart'/>
                                 </Badge>
                             </li>
                             <li className="navigation__item mobile"><Divider type='vertical' /></li>
