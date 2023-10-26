@@ -1,6 +1,6 @@
 import ImageGallery from "react-image-gallery";
 import "./book.scss";
-import { Button, InputNumber, Modal, Row, Col, Rate, Divider } from "antd";
+import { Button, InputNumber, Modal, Row, Col, Rate, Divider, message } from "antd";
 import { useRef, useState } from "react";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { BsCartPlus } from "react-icons/bs";
@@ -18,7 +18,7 @@ const ViewDetail = (props) => {
   
   const dispatch = useDispatch()
   const order = useSelector(state => state.order.carts)
-  console.log('order=>', order);
+ // console.log('order=>', order);
   const handleOnClickImage = () => {
     //get current index onClick
     // alert(refGallery?.current?.getCurrentIndex());
@@ -29,6 +29,7 @@ const ViewDetail = (props) => {
 
   const handleAddToCart = (quantity, detailBook) => {
     dispatch(doAddBookAction({quantity, _id:detailBook._id, detail:detailBook}))
+    
   }
 
 
