@@ -1,0 +1,80 @@
+.container{
+    padding: 20px 0px;
+    background-color: rgba(180, 185, 189, 0.263);
+    .wrapper{
+            max-width: 1440px;
+            margin: 0 auto;
+            .col-left{
+                
+                padding: 20px 8px;
+                .order-item{
+                    border-radius: 5px;
+                    background-color: rgb(255, 255, 255);
+                    padding: 10px 20px 10px 10px;
+                    margin-bottom: 20px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    .order-name{
+                        color: rgb(0, 17, 255);
+                    }
+                    .order-image{
+                        width: 75px;
+                        height: 80px;
+                        img{
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+                    }
+                    .order-info{
+                        display: flex;
+                        justify-content: space-between;
+                        border: 1px solid salmon;
+                    
+                        align-items: center;
+                      
+                    }
+                    .order-remove{
+                        cursor: pointer;
+                    }
+                }
+            }
+            .col-right{
+                padding: 20px 8px;
+                height: 100%;
+                .wrapper-right{
+                    padding: 20px;
+                    background-color: rgb(255, 255, 255);
+                    height: 250px;
+                    border-radius: 5px;
+                    .content-right{
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        width: 100%;
+                        .btn-buy{  
+                            button{
+                                margin: 0 auto;
+                                overflow: visible;
+                                outline: 0;
+                                border: none;
+                                background: #2d9eee;
+                                color: #ffffff;
+                                cursor: pointer;
+                                border-radius: 3px;
+                                font-size: 16px;
+                                height: 35px;
+                                width: 100%;
+                                padding: 0 10px;
+                                &:hover {
+                                    background: #40bbf0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    
+}

@@ -71,7 +71,9 @@ const Header = () => {
         }) : <>Chưa có sản phẩm trong giỏ hàng</>}   
 
         <div className='btn-view-cart'>
-            <button>Xem giỏ hàng</button>
+            <button
+                onClick={()=>navigate('/order')}
+            >Xem giỏ hàng</button>
         </div>
 
       </div>

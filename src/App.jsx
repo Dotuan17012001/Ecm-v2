@@ -23,6 +23,8 @@ import './styles/reset.scss';
 import TableUser from './components/Admin/User/UserTable';
 import BookTable from './components/Admin/Book/BookTable';
 
+import OrderPage from './pages/order';
+
 const Layout = () => {
   return (
     <div className='layout-app'>
@@ -69,6 +71,10 @@ export default function App() {
           path: "book/:slug",
           element: <BookPage />,
         },
+        {
+          path: "order",
+          element: <OrderPage/>
+        },
       ],
     },
 
@@ -91,13 +97,9 @@ export default function App() {
           path: "book",
           element: <BookTable/>,
         },
-        {
-          path: "order",
-          element: <BookPage />,
-        },
+      
       ],
     },
-
 
     {
       path: "/login",
