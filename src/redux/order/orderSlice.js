@@ -49,6 +49,7 @@ export const orderSlide = createSlice({
             const id = action.payload._id
            // console.log('id =>', id);
             state.carts = carts.filter(c => c._id !== id)
+            message.success('Đã xóa sản phẩm khỏi giỏ hàng')
         }
     
         

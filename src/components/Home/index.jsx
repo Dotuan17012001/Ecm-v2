@@ -176,7 +176,7 @@ const Home = () => {
     const slug = convertSlug(book.mainText);
     navigate(`/book/${slug}/?id=${book._id}`)
   }
-    
+  console.log('listBook=>', listBook);
     return (
         <>
         <div className="body-container">
@@ -299,7 +299,7 @@ const Home = () => {
                                                         </div>
                                                         <div className="rating">
                                                             <Rate value={5} disabled style={{ color: '#ffce3d', fontSize: 10 }} />
-                                                            <span>{`Đã bán ${book.sold}k`}</span>
+                                                            <span>{`Đã bán ${book.sold}`}</span>
                                                         </div>
                                                     </div>
                                                 </div>

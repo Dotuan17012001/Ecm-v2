@@ -65,7 +65,7 @@ const LoginPage = () => {
                                 name="password"
                                 rules={[{ required: true, message: 'Mật khẩu không được để trống!' }]}
                             >
-                                <Input.Password />
+                                <Input.Password />z
                             </Form.Item>
 
                             <Form.Item
