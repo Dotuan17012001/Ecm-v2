@@ -23,6 +23,7 @@ import './styles/reset.scss';
 import TableUser from './components/Admin/User/UserTable';
 import BookTable from './components/Admin/Book/BookTable';
 import OrderPage from './pages/order';
+import HistoryOrder from './components/Order/HistoryOrder';
 
 const Layout = () => {
   return (
@@ -73,6 +74,10 @@ export default function App() {
         {
           path: "order",
           element: <OrderPage/>
+        },
+        {
+          path: "history",
+          element: <HistoryOrder/>
         },
       ],
     },

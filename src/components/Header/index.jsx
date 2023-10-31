@@ -43,6 +43,13 @@ const Header = () => {
             >Đăng xuất</label>,
             key: 'logout',
         },
+        {
+            label: <label
+                style={{ cursor: 'pointer' }}
+                onClick={() => navigate('/history')}
+            >Lịch sử đặt hàng</label>,
+            key: 'history',
+        },
 
     ];
 

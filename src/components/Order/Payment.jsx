@@ -218,7 +218,7 @@ const Payment = (props) => {
                   disabled = {isSubmit}
                 >
                   {isSubmit === true && <LoadingOutlined/>}
-                  Thanh toán {`(${orderCart.length})`}
+                    Thanh toán {`(${orderCart.length})`}
                 </button>
               </div>
             </div>

@@ -1,16 +1,13 @@
-import {InputNumber, Empty, Row, Col, Divider, message, Steps,  Button, Result } from "antd";
-import {DeleteTwoTone, SmileOutlined} from '@ant-design/icons';
+import {Steps,  Button, Result } from "antd";
+import {SmileOutlined} from '@ant-design/icons';
 import './order.scss'
-import { useDispatch, useSelector } from "react-redux";
-import { doUpdateCartAction, doRemoveCartAction } from "../../redux/order/orderSlice";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ViewOrder from "../../components/Order/ViewOrder";
 import Payment from "../../components/Order/Payment";
 import { useNavigate } from "react-router-dom";
 
 
 const OrderPage = () => {
-
     const [currentStep, setCurrentStep] = useState(0)
     const navigate = useNavigate()
     return (

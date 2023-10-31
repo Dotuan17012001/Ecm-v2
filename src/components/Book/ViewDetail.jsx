@@ -8,6 +8,7 @@ import ModalGallery from "./ModalGallery";
 import BookLoader from "./BookLoader";
 import { useDispatch, useSelector } from "react-redux";
 import { doAddBookAction } from "../../redux/order/orderSlice";
+import { useNavigate } from "react-router-dom";
 
 const ViewDetail = (props) => {
   const  {images, detailBook} = props
@@ -15,7 +16,7 @@ const ViewDetail = (props) => {
   const [isOpenModalGallery, setIsOpenModalGallery] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentQuantity, setCurrentQuantity] = useState(1);
-  
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const order = useSelector(state => state.order.carts)
  // console.log('order=>', order);
@@ -152,7 +153,12 @@ const ViewDetail = (props) => {
                       <BsCartPlus className="icon-cart" />
                       <span>Thêm vào giỏ hàng</span>
                     </button>
-                    <button className="now">Mua ngay</button>
+                    <button className="now"
+                      onClick={() => {
+                        handleAddToCart(currentQuantity,detailBook)
+                        navigate('/order')
+                      }}
+                    >Mua ngay</button>
                   </div>
                 </Col>
               </Col>

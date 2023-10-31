@@ -86,3 +86,7 @@ export const callCreateOrder = (data) => {
     return axios.post(`/api/v1/order`,{...data})
 }
 
+export const getHistoryOrder = () => {
+    return axios.get(`/api/v1/history`)
+}
+
