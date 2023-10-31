@@ -8,26 +8,29 @@ import {
   Radio,
   Form,
   Input,
-  Button
+  Button,
+  notification,
 } from "antd";
-import { DeleteTwoTone } from "@ant-design/icons";
+import { DeleteTwoTone, LoadingOutlined } from "@ant-design/icons";
 import "./payment.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
   doUpdateCartAction,
   doRemoveCartAction,
+  doReplaceOrderAction
 } from "../../redux/order/orderSlice";
+import { callCreateOrder } from "../../services/api";
 
-doUpdateCartAction;
 const Payment = (props) => {
   const { setCurrentStep } = props;
   const orderCart = useSelector((state) => state.order.carts);
-  const user = useSelector(state => state.account.user)
+  const user = useSelector((state) => state.account.user);
   const [totalPrice, setTotalPrice] = useState(0);
-
+  const [isSubmit, setIsSubmit] = useState(false);
+  const [form] = Form.useForm();
   const dispatch = useDispatch();
-  console.log("user", user);
+  //console.log("orderCart", orderCart);
 
   const handleOnchangeInput = (value, book) => {
     if (!value || value < 1) return;
@@ -50,9 +53,37 @@ const Payment = (props) => {
     setTotalPrice(sum);
   }, [orderCart]);
 
-  const onFinish = () => {
+  const onFinish = async (value) => {
+    setIsSubmit(true);
+    console.log('value=>',value);
+    const detailOrder = orderCart.map((cart)=>{
+      return {    
+        bookName: cart.detail.mainText,
+        quantity: cart.quantity,
+        _id: cart._id 
+      }
+    })
+    const data = {
+      name: value.name,
+      address: value.address,
+      phone: value.phone,
+      totalPrice: totalPrice,
+      detail:detailOrder
+    }
+    const res = await callCreateOrder(data)
+    if(res && res.data){
+      message.success('Đặt hàng thành công')
+      dispatch(doReplaceOrderAction())
+      setCurrentStep(2)
+    }else{
+      notification.error({
+        message:'Đã có lỗi xảy ra',
+        description:res.message
+      })
+    }
+    setIsSubmit(false)
 
-  }
+  };
 
   return (
     <>
@@ -117,28 +148,29 @@ const Payment = (props) => {
           <Row className="wrapper-right-pay">
             <div className="content-right">
               <Form
-                name="basic"
+                form={form}
                 onFinish={onFinish}
-                autoComplete="off"
-                style={{gap:'5px'}}
               >
                 <Form.Item
                   labelCol={{ span: 24 }}
                   label="Tên người nhận"
-                  name="username"
+                  name="name"
                   initialValue={user?.fullName}
                   rules={[
-                    { required: true, message: "Tên người nhận không được để trống!" },
+                    {
+                      required: true,
+                      message: "Tên người nhận không được để trống!",
+                    },
                   ]}
                 >
                   <Input />
                 </Form.Item>
 
                 <Form.Item
-                  labelCol={{ span: 24 }} 
+                  labelCol={{ span: 24 }}
                   label="Số điện thoại"
                   initialValue={user?.phone}
-                  name="phoneNumber"
+                  name="phone"
                   rules={[
                     {
                       required: true,
@@ -146,7 +178,7 @@ const Payment = (props) => {
                     },
                   ]}
                 >
-                  <Input/>
+                  <Input />
                 </Form.Item>
 
                 <Form.Item
@@ -160,30 +192,35 @@ const Payment = (props) => {
                     },
                   ]}
                 >
-                  <Input.TextArea rows={4}/>
+                  <Input.TextArea rows={4} />
                 </Form.Item>
-                <Form.Item 
-                    label="Hình thức thanh toán"
-                    labelCol={{ span: 24 }}
-                >
-                  <Radio
-                    checked
-                  >Thanh toán khi đặt hàng</Radio>
-                </Form.Item>
-                <Divider/>
-                <Row style={{margin:'10px 0', gap:'15px'}}>
-                    <Col>Tổng tiền</Col>
-                    <Col>120000VND</Col>
-                </Row>
-                <Form.Item
-                >
-                  <Button type="primary" htmlType="submit" style={{width:'100%', height:'35px'}}>
-                        Đặt hàng {`(${orderCart.length})`}
-                  </Button>
-                </Form.Item>
-                
               </Form>
-              
+
+              <div className="info">
+                <div className="method">
+                  <div>Hình thức thanh toán</div>
+                  <Radio checked>Thanh toán khi đặt hàng</Radio>
+                </div>
+              </div>
+              <Divider style={{ margin: "5px 0" }} />
+              <div className="total-price">
+                <div>Tổng tiền</div>
+                <div>
+                  {new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(totalPrice ?? 0)}
+                </div>
+              </div>
+              <div className="btn-buy">
+                <button 
+                  onClick={() => form.submit()}
+                  disabled = {isSubmit}
+                >
+                  {isSubmit === true && <LoadingOutlined/>}
+                  Thanh toán {`(${orderCart.length})`}
+                </button>
+              </div>
             </div>
           </Row>
         </Col>

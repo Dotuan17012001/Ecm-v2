@@ -9,6 +9,7 @@ export const orderSlide = createSlice({
     name: 'order',
     initialState,
     reducers: {
+        
         doAddBookAction: (state, action) => {
             let carts = state.carts
             const item = action.payload
@@ -44,12 +45,17 @@ export const orderSlide = createSlice({
             state.carts = carts
 
         },
+
         doRemoveCartAction: (state, action) => {
             let carts = state.carts
             const id = action.payload._id
            // console.log('id =>', id);
             state.carts = carts.filter(c => c._id !== id)
             message.success('Đã xóa sản phẩm khỏi giỏ hàng')
+        },
+
+        doReplaceOrderAction: (state, action) => {
+            state.carts = [] 
         }
     
         
@@ -57,6 +63,6 @@ export const orderSlide = createSlice({
   
 });
 
-export const { doAddBookAction, doUpdateCartAction, doRemoveCartAction } = orderSlide.actions;
+export const { doAddBookAction, doUpdateCartAction, doRemoveCartAction, doReplaceOrderAction } = orderSlide.actions;
 
 export default orderSlide.reducer;

@@ -73,7 +73,7 @@
                                 overflow: visible;
                                 outline: 0;
                                 border: none;
-                                background: #2d9eee;
+                                background: #0b90ef;
                                 color: #ffffff;
                                 cursor: pointer;
                                 border-radius: 3px;
@@ -92,3 +92,15 @@
         }
     
 }
+
+.info {
+    .method{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+ .total-price{
+    display: flex;
+    gap: 25px;
+ }

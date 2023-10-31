@@ -6,12 +6,13 @@ import { doUpdateCartAction, doRemoveCartAction } from "../../redux/order/orderS
 import { useEffect, useState } from "react";
 import ViewOrder from "../../components/Order/ViewOrder";
 import Payment from "../../components/Order/Payment";
+import { useNavigate } from "react-router-dom";
 
 
 const OrderPage = () => {
 
     const [currentStep, setCurrentStep] = useState(0)
-   
+    const navigate = useNavigate()
     return (
         <>
             <div className="container">
@@ -43,8 +44,8 @@ const OrderPage = () => {
                     {currentStep === 2 && 
                         <Result
                             icon={<SmileOutlined />}
-                            title="Great, we have done all the operations!"
-                            extra={<Button type="primary">Next</Button>}
+                            title="Đặt hàng thành công!"
+                            extra={<Button type="primary" onClick={()=>navigate('/')}>Xem lịch sử</Button>}
                         />
                     }
                 </div>
