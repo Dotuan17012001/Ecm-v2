@@ -6,10 +6,10 @@ const initialState = {
     user: {
         email: "",
         phone: "",
-        "fullName": "",
-        "role": "",
-        "avatar": "",
-        "id": ""
+        fullName: "",
+        role: "",
+        avatar: "",
+        id: ""
     }
 };
 
@@ -24,6 +24,7 @@ export const accountSlide = createSlice({
             state.isLoading = false;
             state.user = action.payload;
         },
+
         doGetAccountAction: (state, action) => {
          
             state.isAuthenticated = true;
@@ -44,6 +45,12 @@ export const accountSlide = createSlice({
             }
         },
 
+        doUpdateUserInfoAction: (state, action) => {
+            state.user.avatar = action.payload.avatar
+            state.user.phone = action.payload.phone
+            state.user.fullName = action.payload.fullName
+        },
+
     },
   
     extraReducers: (builder) => {
@@ -51,7 +58,7 @@ export const accountSlide = createSlice({
     },
 });
 
-export const { doLoginAction, doGetAccountAction, doLogoutAction } = accountSlide.actions;
+export const { doLoginAction, doGetAccountAction, doLogoutAction, doUpdateUserInfoAction } = accountSlide.actions;
 
 
 export default accountSlide.reducer;

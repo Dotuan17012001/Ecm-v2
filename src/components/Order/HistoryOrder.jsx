@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import './history.scss'
 import moment from 'moment';
 import ReactJson from 'react-json-view'
+
 const HistoryOrder = () => {
     const [dataHistory , setDataHistory] =  useState([])
     useEffect(()=>{
@@ -12,7 +13,7 @@ const HistoryOrder = () => {
 
     const fetchGetHistory = async() =>{
         const res = await getHistoryOrder()
-        console.log('check use=>>>',res.data)
+        //console.log('check use=>>>',res.data)
         if(res && res.data){
             setDataHistory(res.data)
         }
@@ -52,15 +53,21 @@ const HistoryOrder = () => {
       ];
 
       const data = dataHistory?.map((his, index) => {
-        //console.log('detail', his.detail)
-        
+   
         return {
                 key: 'index',
                 index: index+1,
                 time: moment(his?.createdAt).format("YYYY-MM-DD HH:mm:ss"),
                 totalPrice: `${his?.totalPrice}`,
                 tags:  <Tag color="success">Thành công</Tag>,
-                detail: <ReactJson src={his?.detail} name ='Xem chi tiết' collapsed={true}/>
+                detail: <ReactJson 
+                          src={his?.detail} 
+                          name ='Xem chi tiết' 
+                          collapsed={true} 
+                          enableClipboard = {false}
+                          displayDataTypes = {false}
+                          displayObjectSize = {false}
+                        />
         }
       })
 

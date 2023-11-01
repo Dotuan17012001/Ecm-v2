@@ -11,6 +11,7 @@ import { callLogout } from '../../services/api';
 import './header.scss';
 import { doLogoutAction } from '../../redux/account/accountSlice';
 import { Link } from 'react-router-dom';
+import ManageUser from '../Account/ManageUser';
 //http://localhost:8080/images/avatar/21232f297a57a5a743894a0e4a801fc3.png
 
 const Header = () => {
@@ -18,9 +19,11 @@ const Header = () => {
     const isAuthenticated = useSelector(state => state.account.isAuthenticated);
     const user = useSelector(state => state.account.user);
     const carts = useSelector( state => state.order.carts)
-    console.log('checkCarts >>>', carts)
+    //console.log('checkCarts >>>', carts)
     const navigate = useNavigate();
     const dispatch = useDispatch()
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleLogout = async () => {
         const res = await callLogout();
@@ -33,7 +36,9 @@ const Header = () => {
 
     const items = [
         {
-            label: <label style={{ cursor: 'pointer' }}>Quản lý tài khoản</label>,
+            label: <label style={{ cursor: 'pointer' }} onClick={()=>setIsModalOpen(true)}>
+                        Quản lý tài khoản
+                    </label>,
             key: 'account',
         },
         {
@@ -169,6 +174,11 @@ const Header = () => {
                 <p>Đăng xuất</p>
                 <Divider />
             </Drawer>
+
+            <ManageUser 
+                open = {isModalOpen}
+                setOpen = {setIsModalOpen}
+            />
         </>
     )
 };

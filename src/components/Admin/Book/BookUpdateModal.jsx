@@ -117,7 +117,7 @@ import {
         const slider = dataSlider.map(item => item.name);
         setIsSubmit(true)
         const res = await callUpdateBook(_id, thumbnail, slider, mainText, author, price, sold, quantity, category)
-       if(res){
+        if(res){
        // console.log('data res', res)
             setIsSubmit(false);
             message.success('Cập nhật sách thành công');
@@ -128,7 +128,7 @@ import {
             form.resetFields()
             await fetchListBook()
             
-       }else{
+        }else{
         notification.error({
             message: 'Có lỗi xảy ra',
             description: 'Cập nhật sách thất bại',
@@ -136,7 +136,6 @@ import {
         })
        }
     };
-
 
     const getBase64 = (img, callback) => {
         const reader = new FileReader();

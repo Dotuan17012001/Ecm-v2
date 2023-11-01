@@ -1,0 +1,17 @@
+button{
+    margin: 0 auto;
+    overflow: visible;
+    outline: 0;
+    border: none;
+    background: #0b90ef;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 15px;
+    height: 35px;
+    //width: 100%;
+    padding: 0 10px;
+    &:hover {
+        background: #40bbf0;
+    }
+}

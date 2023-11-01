@@ -89,7 +89,7 @@ const Payment = (props) => {
     <>
       <Row gutter={[20, 20]}>
         {orderCart?.length === 0 ? (
-          <Col className="col-left" md={18} sm={24} xs={24}>
+          <Col className="col-left" md={16} sm={24} xs={24}>
             <div className="col-empty">
               <Empty
                 className="empty-item"

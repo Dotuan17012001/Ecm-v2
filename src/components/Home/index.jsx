@@ -176,7 +176,7 @@ const Home = () => {
     const slug = convertSlug(book.mainText);
     navigate(`/book/${slug}/?id=${book._id}`)
   }
-  console.log('listBook=>', listBook);
+ // console.log('listBook=>', listBook);
     return (
         <>
         <div className="body-container">
