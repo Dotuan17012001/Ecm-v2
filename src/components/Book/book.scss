@@ -1,10 +1,27 @@
 @import "react-image-gallery/styles/scss/image-gallery.scss";
 
 .view-detail-book {
-
+    max-width: 1440px;
+    margin: 0 auto;
+    min-height: calc(100vh - 150px);
     .original-image,
     .thumbnail-image {
         cursor: pointer;
+    }
+
+    .img-gallery{
+        height: 600px;
+      
+        position: relative;
+        .image-gallery-thumbnails-container{
+            
+            height: 110px;
+             .image-gallery-thumbnail, .thumbnail-image, .active{
+                height: 105px;
+             }
+            
+        }
+      
     }
 
     .title {
@@ -93,8 +110,8 @@
     }
 
     .buy {
-        display: flex;
-        gap: 20px;
+        
+        
         padding: 20px 0;
 
         button {
@@ -111,12 +128,17 @@
             height: 48px;
             padding: 0 20px;
 
+            align-items: center;
+          
+
             &.now {
                 color: #fff;
                 position: relative;
                 overflow: visible;
                 outline: 0;
                 background: #2d9eee;
+               
+                margin-left: 55px;
             }
         }
 

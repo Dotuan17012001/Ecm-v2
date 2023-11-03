@@ -117,3 +117,11 @@ export const callUpdateInfoUser = (_id, phone , fullName, avatar) => {
 export const callChangePassword = (email, oldpass, newpass) => {
     return axios.post(`/api/v1/user/change-password`,{email, oldpass, newpass})
 }
+
+export const callGetListOrderWithPaginate = (query) => {
+    return axios.get(`/api/v1/order?${query}`)
+}
+
+export const callGetDashboard = () => {
+    return axios.get(`/api/v1/database/dashboard`)
+}

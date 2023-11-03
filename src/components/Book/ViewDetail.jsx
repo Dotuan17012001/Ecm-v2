@@ -1,6 +1,6 @@
 import ImageGallery from "react-image-gallery";
 import "./book.scss";
-import { Button, InputNumber, Modal, Row, Col, Rate, Divider, message } from "antd";
+import {  Row, Col, Rate, Divider, message } from "antd";
 import { useRef, useState } from "react";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { BsCartPlus } from "react-icons/bs";
@@ -63,20 +63,15 @@ const ViewDetail = (props) => {
 
   return (
     <>
-      <div style={{ background: "#efefef", padding: "20px 0" }}>
-        <div
-          className="view-detail-book"
-          style={{
-            maxWidth: 1440,
-            margin: "0 auto",
-            minHeight: "calc(100vh - 150px)",
-          }}
-        >
-          <div style={{ padding: "20px", background: "#fff", borderRadius: 5 }}>
+      <div style={{ background: "#efefef", padding: "20px 0", }}>
+        <div className="view-detail-book">
+          <div style={{ padding: "20px", background: "#fff", borderRadius: 5,  height:'580px' }}>
             {detailBook && detailBook?._id ? 
             <Row gutter={[20, 20]}>
               <Col md={10} sm={0} xs={0}>
+                <div className="img-gallery">
                 <ImageGallery
+                  className = 'img-ga'
                   ref={refGallery}
                   items={images}
                   showPlayButton={false}
@@ -86,6 +81,7 @@ const ViewDetail = (props) => {
                   renderLeftNav={() => <></>}
                   renderRightNav={() => <></>}
                 />
+                </div>
               </Col>
               <Col md={14} sm={24} xs={24}>
                 <Col md={0} sm={24} xs={24}>

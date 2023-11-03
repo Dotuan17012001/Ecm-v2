@@ -107,7 +107,6 @@ const BookTable = () => {
       }
     },
     {
-  
       title: "Action",
       dataIndex: "action",
       width: 100,

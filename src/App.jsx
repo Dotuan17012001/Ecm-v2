@@ -24,6 +24,7 @@ import TableUser from './components/Admin/User/UserTable';
 import BookTable from './components/Admin/Book/BookTable';
 import OrderPage from './pages/order';
 import HistoryOrder from './components/Order/HistoryOrder';
+import TableListOrder from './components/Admin/Order/TableListOrder';
 
 const Layout = () => {
   return (
@@ -100,6 +101,10 @@ export default function App() {
         {
           path: "book",
           element: <BookTable/>,
+        },
+        {
+          path: "order",
+          element: <TableListOrder/>
         },
       
       ],
