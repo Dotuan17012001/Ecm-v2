@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     AppstoreOutlined,
     ExceptionOutlined,
@@ -64,6 +64,18 @@ const LayoutAdmin = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    useEffect(()=>{
+        if(window.location.pathname.includes('/book')){
+            setActiveMenu('book')
+        }
+        if(window.location.pathname.includes('/user')){
+            setActiveMenu('crud')
+        }
+        if(window.location.pathname.includes('/order')){
+            setActiveMenu('order')
+        }
+    },[])
+
     const handleLogout = async () => {
         const res = await callLogout();
         if (res && res.data) {
@@ -112,7 +124,8 @@ const LayoutAdmin = () => {
                     Admin
                 </div>
                 <Menu
-                    defaultSelectedKeys={[activeMenu]}
+                    //defaultSelectedKeys={[activeMenu]}
+                    selectedKeys={[activeMenu]}
                     mode="inline"
                     items={items}
                     onClick={(e) => setActiveMenu(e.key)}
