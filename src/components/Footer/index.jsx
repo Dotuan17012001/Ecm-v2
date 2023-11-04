@@ -2,7 +2,7 @@ import './footer.scss';
 const Footer = () => {
     return (
         <footer>
-            <div>Footer My Website</div>
+            <div></div>
         </footer>
     )
 }

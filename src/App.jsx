@@ -27,10 +27,11 @@ import HistoryOrder from './components/Order/HistoryOrder';
 import TableListOrder from './components/Admin/Order/TableListOrder';
 
 const Layout = () => {
+  const [searchTerm, setSearchTerm] = useState('')
   return (
     <div className='layout-app'>
-      <Header />
-        <Outlet />
+      <Header searchTerm = {searchTerm} setSearchTerm = {setSearchTerm}/>
+        <Outlet context={[searchTerm, setSearchTerm]}/>
       <Footer />
     </div>
   )
@@ -74,11 +75,17 @@ export default function App() {
         },
         {
           path: "order",
-          element: <OrderPage/>
+          element: 
+          <ProtectedRoute>
+            <OrderPage/>
+          </ProtectedRoute>
         },
         {
           path: "history",
-          element: <HistoryOrder/>
+          element: 
+          <ProtectedRoute>
+            <HistoryOrder/>
+          </ProtectedRoute>
         },
       ],
     },
@@ -96,15 +103,24 @@ export default function App() {
         },
         {
           path: "user",
-          element: <TableUser />,
+          element: 
+          <ProtectedRoute>
+            <TableUser />,
+          </ProtectedRoute>
         },
         {
           path: "book",
-          element: <BookTable/>,
+          element: 
+          <ProtectedRoute>
+            <BookTable/>,
+          </ProtectedRoute>
         },
         {
           path: "order",
-          element: <TableListOrder/>
+          element: 
+          <ProtectedRoute>
+            <TableListOrder/>
+          </ProtectedRoute>
         },
       
       ],

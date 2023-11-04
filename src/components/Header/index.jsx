@@ -14,7 +14,8 @@ import { Link } from 'react-router-dom';
 import ManageUser from '../Account/ManageUser';
 //http://localhost:8080/images/avatar/21232f297a57a5a743894a0e4a801fc3.png
 
-const Header = () => {
+const Header = (props) => {
+    const {searchTerm, setSearchTerm} = props
     const [openDrawer, setOpenDrawer] = useState(false);
     const isAuthenticated = useSelector(state => state.account.isAuthenticated);
     const user = useSelector(state => state.account.user);
@@ -111,12 +112,15 @@ const Header = () => {
                         }}>☰</div>
                         <div className='page-header__logo'>
                             <span className='logo' onClick={()=>navigate('/')}>
-                                <FaReact className='rotate icon-react' /> TiPee Shop
+                                <FaReact className='rotate icon-react' />
+                                    <span className='text-logo'>TiPee Shop</span> 
                                 <VscSearchFuzzy className='icon-search' />
                             </span>
                             <input
                                 className="input-search" type={'text'}
                                 placeholder="Bạn tìm gì hôm nay"
+                                value={searchTerm}
+                                onChange={(e)=>setSearchTerm(e.target.value)}
                             />
                         </div>
 

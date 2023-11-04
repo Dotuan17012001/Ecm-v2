@@ -5,9 +5,11 @@ import { useEffect, useState } from 'react';
 import { getBookCategory, getListBookWithPaginate } from '../../services/api';
 import { Pagination } from 'antd';
 import { useForm } from 'antd/es/form/Form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 
 const Home = () => {
+
+    const [searchTerm, setSearchTerm] = useOutletContext()
 
     const [form] = Form.useForm()
 
@@ -84,6 +86,10 @@ const Home = () => {
                 query+=sortQuery
             }
 
+            if(searchTerm){
+                query += `&mainText=/${searchTerm}/i`;
+            }
+
             if(query){
                const res = await getListBookWithPaginate(query)
                //console.log('checkListBook',res)
@@ -98,7 +104,7 @@ const Home = () => {
         }
         fetchListBook()
         
-    }, [pageSize, currentPage, sortQuery, filter]);
+    }, [pageSize, currentPage, sortQuery, filter, searchTerm]);
 
 
     const handleOnChangePage = (curr, size) => {
@@ -189,7 +195,7 @@ const Home = () => {
                                     <FilterTwoTone />
                                     Bộ lọc tìm kiếm
                                 </span>
-                                <ReloadOutlined onClick={() => {form.resetFields(), setFilter('')}}/>
+                                <ReloadOutlined onClick={() => {form.resetFields(), setFilter(''). setSearchTerm('')}}/>
                             </div>
                             <Divider/>
                             <Form 

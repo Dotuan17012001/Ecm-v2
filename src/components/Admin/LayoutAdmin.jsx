@@ -130,7 +130,7 @@ const LayoutAdmin = () => {
                         <a onClick={(e) => e.preventDefault()}>
                             <Space>
                             <Avatar src={<img src={`${import.meta.env.VITE_BACKEND_URL}/images/avatar/${user.avatar}`} alt="avatar" />} />
-                                Welcome {user?.fullName}
+                                 {user?.fullName}
                                 <DownOutlined />
                             </Space>
                         </a>
@@ -140,7 +140,7 @@ const LayoutAdmin = () => {
                     <Outlet />
                 </Content>
                 <Footer style={{ padding: 0 }}>
-                     The world's first electronic trading website <HeartTwoTone />
+                      <HeartTwoTone />
                 </Footer>
             </Layout>
         </Layout>
