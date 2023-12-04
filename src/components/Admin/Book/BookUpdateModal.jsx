@@ -37,9 +37,9 @@ import {
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
 
-    const [initForm, setInitForm] = useState(null);
+    const [initForm,setInitForm] = useState(null);
 
-    useEffect(() => {
+    useEffect(() =>  {
         const fetchCategory = async () => {
             const res = await callFetchCategory();
             if (res && res.data) {
@@ -88,6 +88,7 @@ import {
             setDataSlider(arrSlider);
             form.setFieldsValue(init);
         }
+
         return () => {
             form.resetFields();
         }

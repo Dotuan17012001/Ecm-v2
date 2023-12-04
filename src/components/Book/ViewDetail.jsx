@@ -11,6 +11,7 @@ import { doAddBookAction } from "../../redux/order/orderSlice";
 import { useNavigate } from "react-router-dom";
 
 const ViewDetail = (props) => {
+
   const  {images, detailBook} = props
   const refGallery = useRef(null);
   const [isOpenModalGallery, setIsOpenModalGallery] = useState(false);
@@ -19,6 +20,7 @@ const ViewDetail = (props) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const order = useSelector(state => state.order.carts)
+  
  // console.log('order=>', order);
   const handleOnClickImage = () => {
     //get current index onClick

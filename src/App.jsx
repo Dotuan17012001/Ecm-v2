@@ -140,7 +140,7 @@ export default function App() {
   return (
     <>
       {
-        isLoading === false
+          isLoading === false
           || window.location.pathname === '/login'
           || window.location.pathname === '/register'
           || window.location.pathname === '/'
